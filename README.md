@@ -8,6 +8,10 @@
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-3.11.2-11557C?style=for-the-badge)
 ![OS](https://img.shields.io/badge/OS-Windows%2011%20Pro-0078D6?style=for-the-badge&logo=windows11&logoColor=white)
 
+**Họ và tên:** Vũ Đức Trung  
+**Mã sinh viên:** 25022036  
+**Học phần:** 2627I_UET.CS1058_9  
+
 Nghiên cứu thực nghiệm tìm giá trị **`CUTOFF`** tối ưu (ngưỡng chuyển sang **Insertion Sort** cho mảng con nhỏ) trong thuật toán **MergeSort**, dựa trên giáo trình *Algorithms, 4th Edition* (`Tuan 5 Merge Sort.pdf`, trang 7, 8, 18, 22), đồng thời kiểm chứng hai mốc kinh điển `CUTOFF = 7` và `CUTOFF = 10`.
 
 ---
@@ -123,4 +127,26 @@ python scripts/run_experiments.py --exe ./benchmark.exe --trials 15
 ```powershell
 python scripts/analyze.py
 python scripts/full_analysis.py
+```
+
+---
+
+## 6. Tải bản Release & Chạy tái lập nhanh (dành cho giảng viên)
+
+Repository được tích hợp sẵn **GitHub Actions CI/CD** (`.github/workflows/release.yml`) tự động biên dịch `benchmark.exe` (static build `-O2`, không cần cài thêm trình biên dịch C++ hay DLL ngoài) và đóng gói toàn bộ mã nguồn, dữ liệu, script chạy lại vào file `mergesort-cutoff-windows-x64.zip`.
+
+### 6.1. Tải và chạy ngay trên Windows
+1. Truy cập mục **Releases** trên GitHub của repository và tải về file **`mergesort-cutoff-windows-x64.zip`**.
+2. Giải nén vào một thư mục bất kỳ.
+3. Mở **Command Prompt** hoặc **PowerShell** tại thư mục vừa giải nén (hoặc bấm đúp trực tiếp vào file `reproduce.bat`):
+```powershell
+.\reproduce.bat
+```
+Script `reproduce.bat` sẽ tự động cài đặt `requirements.txt`, sinh lại dữ liệu (seed cố định), chạy đủ 15 lần đo với `benchmark.exe` và xuất lại toàn bộ bảng thống kê CSV cùng 5 biểu đồ trong `results/charts/`.
+
+### 6.2. Tạo bản Release mới qua GitHub Actions
+Đẩy một tag dạng `v*` (hoặc chạy thủ công từ tab **Actions → Build and Release MergeSort CUTOFF → Run workflow**):
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
 ```

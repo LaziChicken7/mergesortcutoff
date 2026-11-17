@@ -1,0 +1,65 @@
+name: Build and Release MergeSort CUTOFF
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v1.0.0)"
+        required: true
+        default: "v1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check g++ compiler
+        shell: pwsh
+        run: |
+          g++ --version
+
+      - name: Compile static benchmark.exe (Release -O2)
+        shell: pwsh
+        run: |
+          g++ -std=c++17 -O2 -DNDEBUG -static src/benchmark.cpp src/mergesort_user.cpp -o benchmark.exe
+
+      - name: Smoke test benchmark.exe
+        shell: pwsh
+        run: |
+          python -m pip install -r requirements.txt
+          python scripts/generate_data.py --sizes 1000
+          ./benchmark.exe data/random_1000.txt 1 results/ci_smoke.csv 42
+          Remove-Item results/ci_smoke.csv -ErrorAction SilentlyContinue
+
+      - name: Package release archive
+        shell: pwsh
+        run: |
+          $stage = "release_pkg"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+          Copy-Item benchmark.exe, reproduce.bat, requirements.txt, README.md $stage
+          Copy-Item -Recurse src, scripts, data, results, report, docs, chatlog $stage
+          Compress-Archive -Path "$stage\*" -DestinationPath "mergesort-cutoff-windows-x64.zip" -Force
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          name: "MergeSort CUTOFF Experiment (${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }})"
+          generate_release_notes: true
+          files: |
+            mergesort-cutoff-windows-x64.zip
+            benchmark.exe

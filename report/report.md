@@ -1,6 +1,8 @@
 # Báo cáo thực nghiệm: Tìm giá trị CUTOFF tối ưu cho MergeSort
 
-**Sinh viên thực hiện:** [Điền họ tên / MSSV]  
+**Họ và tên:** Vũ Đức Trung  
+**Mã sinh viên:** 25022036  
+**Học phần:** 2627I_UET.CS1058_9  
 **Tài liệu tham khảo:** `Tuan 5 Merge Sort.pdf` (Robert Sedgewick & Kevin Wayne, *Algorithms, 4th Edition* — Lecture 2.2 Mergesort)
 
 ---
