@@ -1,0 +1,9 @@
+OS: Microsoft Windows 11 Pro 10.0.26300 (64-bit)
+CPU: Intel(R) Core(TM) Ultra 9 185H (16 cores, 22 logical processors, base/max 2500 MHz)
+RAM: 31.41 GB
+Compiler: g++.exe (MinGW-W64 i686-ucrt-posix-dwarf, built by Brecht Sanders, r4) 15.2.0
+Compiler Flags: -std=c++17 -O2 -DNDEBUG
+Python: 3.12.10 (matplotlib 3.11.2, pandas 3.1.1, numpy 2.5.5)
+Trials: 15 (plus 1 warmup per cutoff per dataset)
+Cutoffs: 0, 2, 4, 6, 7, 8, 10, 12, 14, 16, 20, 24, 28, 32, 40, 48, 64
+Datasets: random, ascending, descending, duplicates (N = 1000, 10000, 100000, 500000)

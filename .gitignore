@@ -1,0 +1,6 @@
+benchmark
+*.exe
+*.o
+__pycache__/
+.venv/
+src/.cph/
