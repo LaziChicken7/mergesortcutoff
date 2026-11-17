@@ -1,7 +1,7 @@
 # MergeSort CUTOFF — Experimental Benchmark & Analysis
 
 ![C++17](https://img.shields.io/badge/C%2B%2B-17-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
-![g++](https://img.shields.io/badge/g%2B%2B-15.2.0%20(-O2)-blue?style=for-the-badge&logo=gnu&logoColor=white)
+![g++](https://img.shields.io/badge/g%2B%2B%2015.2.0-O2%20Release-blue?style=for-the-badge&logo=gnu&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12.10-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-3.1.1-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-2.5.5-013243?style=for-the-badge&logo=numpy&logoColor=white)
@@ -99,20 +99,28 @@ Nghiên cứu thực nghiệm tìm giá trị **`CUTOFF`** tối ưu (ngưỡng 
 
 ## 5. Hướng dẫn tái lập thí nghiệm (Windows PowerShell)
 
+### 5.1. Cài đặt thư viện Python
 ```powershell
-# 1. Cài đặt thư viện Python
 python -m pip install -r requirements.txt
+```
 
-# 2. Biên dịch C++ (Release -O2)
+### 5.2. Biên dịch chương trình C++ (Release `-O2`)
+```powershell
 g++ -std=c++17 -O2 -DNDEBUG src/benchmark.cpp src/mergesort_user.cpp -o benchmark.exe
+```
 
-# 3. Sinh bộ dữ liệu thí nghiệm
+### 5.3. Sinh bộ dữ liệu thí nghiệm
+```powershell
 python scripts/generate_data.py
+```
 
-# 4. Chạy benchmark (15 lần lặp mỗi cấu hình + warm-up)
+### 5.4. Chạy benchmark (15 lần lặp mỗi cấu hình + warm-up)
+```powershell
 python scripts/run_experiments.py --exe ./benchmark.exe --trials 15
+```
 
-# 5. Phân tích thống kê và vẽ biểu đồ
+### 5.5. Phân tích thống kê và vẽ biểu đồ
+```powershell
 python scripts/analyze.py
 python scripts/full_analysis.py
 ```
