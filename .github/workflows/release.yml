@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag (e.g. v1.0.0)"
+        description: "Release tag (e.g. v1.0.1)"
         required: true
-        default: "v1.0.0"
+        default: "v1.0.1"
 
 permissions:
   contents: write
@@ -59,7 +59,39 @@ jobs:
         with:
           tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
           name: "MergeSort CUTOFF Experiment (${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }})"
-          generate_release_notes: true
+          generate_release_notes: false
+          body: |
+            **Sinh viên:** Vũ Đức Trung — **MSSV:** 25022036 — **Học phần:** `2627I_UET.CS1058_9`
+
+            ---
+
+            ## 1. Tải file nào?
+            - Tải file **`mergesort-cutoff-windows-x64.zip`** ở mục **Assets** bên dưới (đã đóng gói đầy đủ file chạy `benchmark.exe`, mã nguồn, dữ liệu và script phân tích).
+            - *(File `benchmark.exe` đứng riêng lẻ chỉ dùng khi muốn chạy trực tiếp CLI mà không cần giải nén toàn bộ gói.)*
+
+            ## 2. Cách chạy tái lập thí nghiệm (Windows)
+            1. **Giải nén** `mergesort-cutoff-windows-x64.zip` vào một thư mục bất kỳ.
+            2. Đảm bảo máy đã cài **Python 3.10+** (không cần cài đặt lại trình biên dịch C++ vì `benchmark.exe` đã biên dịch tĩnh `-static` với `-O2`).
+            3. **Bấm đúp** vào file **`reproduce.bat`** (hoặc mở PowerShell/CMD trong thư mục vừa giải nén và chạy `.\reproduce.bat`).
+            4. Script `reproduce.bat` sẽ tự động thực hiện lần lượt:
+               - Cài đặt các thư viện Python cần thiết từ `requirements.txt` (`matplotlib`, `pandas`, `numpy`).
+               - Sinh lại 16 bộ dữ liệu thí nghiệm trong `data/` theo seed cố định (`20261117 + n`).
+               - Chạy `benchmark.exe` với 15 lần đo + warm-up cho từng tổ hợp, lưu kết quả thô vào `results/all_runs.csv`.
+               - Phân tích thống kê và xuất lại 5 biểu đồ PNG vào `results/charts/`.
+
+            ## 3. Mô tả các file và thư mục bên trong `mergesort-cutoff-windows-x64.zip`
+            | Thành phần | Mô tả |
+            |---|---|
+            | `benchmark.exe` | File thực thi C++ đã biên dịch tĩnh (`g++ -std=c++17 -O2 -DNDEBUG -static`), chạy được ngay trên Windows 64-bit. |
+            | `reproduce.bat` | Script chạy tự động 1 chạm toàn bộ quy trình tái lập thí nghiệm. |
+            | `requirements.txt` | Danh sách thư viện Python (`matplotlib`, `pandas`, `numpy`). |
+            | `README.md` | Tài liệu hướng dẫn chi tiết và tóm tắt kết quả thực nghiệm. |
+            | `src/` | Mã nguồn C++: `mergesort_user.cpp` (thuật toán MergeSort + CUTOFF), `benchmark.cpp` (đo thời gian), `test.cpp` (kiểm thử). |
+            | `scripts/` | Các script Python: `generate_data.py` (sinh dữ liệu), `run_experiments.py` (chạy đo), `analyze.py` & `full_analysis.py` (thống kê & vẽ biểu đồ). |
+            | `data/` | 16 bộ dữ liệu test (`random`, `ascending`, `descending`, `duplicates` cho `N = 1000, 10000, 100000, 500000`). |
+            | `results/` | Kết quả đo mẫu trên máy sinh viên (`machine.txt`, `all_runs.csv`, `detailed_summary.csv`, `detailed_ranking.csv`) và thư mục `charts/` chứa 5 biểu đồ PNG. |
+            | `report/` | Báo cáo thực nghiệm hoàn chỉnh (`report.md`). |
+            | `docs/` & `chatlog/` | Nhật ký sử dụng AI (`ai_chat_log.md`, `AI_USAGE.md`). |
           files: |
             mergesort-cutoff-windows-x64.zip
             benchmark.exe
