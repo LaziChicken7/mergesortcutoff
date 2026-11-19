@@ -12,7 +12,7 @@
 **Mã sinh viên:** 25022036  
 **Học phần:** 2627I_UET.CS1058_9  
 
-Nghiên cứu thực nghiệm tìm giá trị **`CUTOFF`** tối ưu (ngưỡng chuyển sang **Insertion Sort** cho mảng con nhỏ) trong thuật toán **MergeSort**, dựa trên giáo trình *Algorithms, 4th Edition* (`Tuan 5 Merge Sort.pdf`, trang 7, 8, 18, 22), đồng thời kiểm chứng hai mốc kinh điển `CUTOFF = 7` và `CUTOFF = 10`.
+Nghiên cứu thực nghiệm tìm giá trị **`CUTOFF`** tối ưu (ngưỡng chuyển sang **Insertion Sort** cho mảng con nhỏ) trong thuật toán **MergeSort**, dựa trên giáo trình *Algorithms, 4th Edition*, đồng thời kiểm chứng hai mốc kinh điển `CUTOFF = 7` và `CUTOFF = 10`.
 
 ---
 
